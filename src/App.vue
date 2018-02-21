@@ -5,8 +5,12 @@
 </template>
 
 <script>
+import Menu from '@/components/menu'
 export default {
-  name: 'App'
+  name: 'App',
+  component:{
+    Menu
+  }
 }
 </script>
 

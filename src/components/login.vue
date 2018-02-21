@@ -29,6 +29,7 @@
 <script>
 import Head from '@/components/head'
 import Foot from '@/components/foot'
+import axios from 'axios'
 export default {
   components:{
     Head,Foot
@@ -40,7 +41,8 @@ export default {
       formdata: {
         account: '',
         password: '',
-      }
+      },
+      loginUrl:'http://localhost/TabaccoSystem/php/login.php'
     }
   },
   methods:{
@@ -62,13 +64,51 @@ export default {
         })
       }
       else{
-        this.$notify({
-          message:'项目开发中尽请期待',
-          type:'success',
-          duration:1000,
-          offset: 200
-        })
-        // ajax
+        var bodyFormData = new FormData()
+          bodyFormData.append('username',this.formdata.account);
+          bodyFormData.append('pwd',this.formdata.password);
+          axios({
+            method:"POST",
+            url:this.loginUrl,
+            data:bodyFormData,
+            config: { headers: {'Content-Type': 'application/x-www-form-urlencoded' }}
+          })
+          .then((res) =>{
+            console.log(res.data)
+            if (res.data.status==2) {//密码错误
+              this.$notify({
+                message:'密码错误',
+                type:'warning',
+                center:true,
+                duration:1000,
+                offset:200
+              })
+            }
+            else if(res.data.status==1){//登录成功
+              this.$notify({
+                message:'登录成功',
+                type:'success',
+                center:true,
+                duration:1000,
+                offset:200,
+                onClose:function(){
+                 window.location.href="http://localhost:8080/#/index/home"
+                }
+              })
+            }
+            else{//用户还没注册
+              this.$notify({
+                message:'用户还没注册',
+                type:'error',
+                center:true,
+                duration:1000,
+                offset:200
+              })
+            }
+          })
+          .catch((error) =>{
+            console.log(error)
+          })
       }
     },
     goRegister:function(){

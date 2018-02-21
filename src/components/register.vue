@@ -32,6 +32,7 @@
 <script>
 import Head from '@/components/head'
 import Foot from '@/components/foot'
+import axios from 'axios'
 export default {
   components:{
     Head,Foot
@@ -44,7 +45,8 @@ export default {
         account: '',
         pwd1: '',
         pwd2:''
-      }
+      },
+      registerUrl:'http://localhost/TabaccoSystem/php/register.php'
     }
   },
   methods:{
@@ -98,13 +100,48 @@ export default {
         })
       }
       else{
-        this.$notify({
-          message:'已经成功输入',
-          type:'success',
-          duration:2000,
-          offset: 200
+        
+        var bodyformdata = new FormData()
+        bodyformdata.append('username',this.registerData.account)
+        bodyformdata.append('pwd',this.registerData.pwd2)
+        axios({
+          method:"POST",
+            url:this.registerUrl,
+            data:bodyformdata,
+            config: { headers: {'Content-Type': 'application/x-www-form-urlencoded' }}
         })
-        // axios
+        .then((res) =>{
+          if (res.data.status==1) {
+            this.$notify({
+              message:'注册成功',
+              type:'success',
+              duration:2000,
+              offset: 200,
+              onClose:function(){
+                window.location.href="http://localhost:8080/#/login"
+              }
+            })
+          }
+          else if (res.data.status==0) {
+            this.$notify({
+              message:'用户已存在',
+              type:'error',
+              duration:2000,
+              offset: 200
+            })
+          }
+          else{
+            this.$notify({
+              message:'注册失败',
+              type:'error',
+              duration:2000,
+              offset: 200
+            })
+          }
+        })
+        .catch((res)=>{
+          console.log(res)
+        })
       }
     },
     goLogin:function(){

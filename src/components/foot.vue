@@ -23,9 +23,12 @@ export default {
 </script>
 <style lang="scss" scoped>
   #foot{
-      margin-top: 40px;
+      position: fixed;
+      bottom:100px;
+      left: 0;
+      right: 0;
       border-top:1px solid #c7c7c7;
-      padding-top:15px;
+      padding-top: 20px;
       ul{
         li{
           display:inline-block;
