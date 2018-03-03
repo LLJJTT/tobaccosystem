@@ -1,12 +1,18 @@
 <template>
 	<div id="menu">
-		  <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-		    <el-menu :default-openeds="['1', '3']">
+		  <el-aside width="100%" style="background-color: rgb(238, 241, 246)">
+		    <el-menu :default-openeds="[]">
 		    	<span @click="goHome" id="yibiao"><i class="el-icon-menu"></i>&nbsp;  仪表盘</span>
 		      <el-submenu index="1">
 		        <template slot="title"><i class="el-icon-document"></i>订单管理</template>
 		        <el-menu-item-group>
-		          <el-menu-item @click="goSale" index="1-1">销售</el-menu-item>
+		          <el-submenu index="1-1">
+			          <template slot="title">销售</template>
+			          <el-menu-item @click="goNoHandle" index="1-1-1">未处理</el-menu-item>
+			          <el-menu-item @click="goAlreadyHandle" index="1-1-2">已处理</el-menu-item>
+			        </el-submenu>
+		        </el-menu-item-group>
+		        <el-menu-item-group title="">
 		          <el-menu-item @click="goReturn" index="1-2">退货</el-menu-item>
 		        </el-menu-item-group>
 		        <el-menu-item-group title="">
@@ -16,8 +22,8 @@
 		      <el-submenu index="2">
 		        <template slot="title"><i class="el-icon-tickets"></i>库存管理</template>
 		        <el-menu-item-group>
-		          <el-menu-item @click="goAdd" index="2-1">添加</el-menu-item>
-		          <el-menu-item @click="goDelete" index="2-2">删除</el-menu-item>
+		        	<el-menu-item @click="goLookStock" index="2-1">库存</el-menu-item>
+		          <el-menu-item @click="goAdd" index="2-2">添加</el-menu-item>
 		        </el-menu-item-group>
 		      </el-submenu>
 		      <el-submenu index="3">
@@ -44,9 +50,14 @@
 					path:'home'
 				})
 			},
-			goSale:function(){
+			goNoHandle:function(){
 				this.$router.push({
-					path:'allsale'
+					path:'nohandle'
+				})
+			},
+			goAlreadyHandle:function(){
+				this.$router.push({
+					path:'alreadyhandle'
 				})
 			},
 			goReturn:function(){
@@ -64,15 +75,15 @@
 					path:'add'
 				})
 			},
-			goDelete:function(){
+			goLookStock:function(){
 				this.$router.push({
-					path:'delete'
+					path:'lookstock'
 				})
 			},
 			goQuit:function(){
         const h = this.$createElement;
         this.$msgbox({
-          title: '注意',
+          title: '提示',
           message: h('p', null, [
             h('span', null, '你是否要 '),
             h('i', { style: 'color: red' }, '退出？')
@@ -101,6 +112,7 @@
             message: '退出成功',
             onClose:function(){
             	window.location.href="http://localhost:8080/#/login"
+            	sessionStorage.removeItem('username')
             }
           });
         });
@@ -112,7 +124,7 @@
 
 <style scoped>
 	#menu{
-		width: 16%;
+		width: 14%;
 		float: left;
 	}
 	.el-header {

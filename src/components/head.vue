@@ -7,6 +7,9 @@
       <div class="title">
         <span>{{title}}</span>
       </div>
+      <div class="user">
+        <span>{{username}}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -16,10 +19,14 @@ export default {
     return {
       logoUrl:'../static/img/logo.jpg',
       title:'辉煌烟草销售系统',
+      username:''
     }
   },
   methods:{
-    
+
+  },
+  created:function(){
+    this.username = sessionStorage.getItem('username')
   }
 }
 </script>
@@ -47,6 +54,14 @@ export default {
           padding-left:10px;
           border-left:2px solid #eee;
         }
+      }
+      .user{
+        float: right;
+        line-height: 80px;
+        margin-right: 160px;
+        font-size: 24px;
+        padding: 0 40px;
+        color: #700090;
       }
     }
   }

@@ -12,7 +12,8 @@
           </el-form-item>
         </el-form>
         <div class="ft">
-          <span @click="goLogin">立即登录</span><span class="space"></span><span @click="goRegister">新用户注册</span>
+          <span @click="goLogin">立即登录</span>
+          <!-- <span @click="goRegister">新用户注册</span> -->
         </div>
       </div>
       <div style="clear:both"></div>

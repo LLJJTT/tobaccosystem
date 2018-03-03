@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login'
-import Register from '@/components/register'
 import ResetPassWord from '@/components/resetpassword'
 import Index from '@/components/index'
 import Home from '@/components/home'
-import AllSale from '@/components/allsale'
+import NoHandle from '@/components/nohandle'
+import AlreadyHandle from '@/components/alreadyhandle'
 import ReturnGoods from '@/components/returngoods'
 import Query from '@/components/query'
 import Add from '@/components/add'
-import Delete from '@/components/delete'
+import LookStock from '@/components/lookstock'
 
 Vue.use(Router)
 
@@ -23,13 +23,7 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: Register
-    },
-    {
+    },{
       path: '/resetpassword',
       name: 'resetpassword',
       component: ResetPassWord
@@ -46,9 +40,13 @@ export default new Router({
           name:'home',
           component:Home
         },{
-          path:'allsale',
-          name:'allsale',
-          component:AllSale
+          path:'nohandle',
+          name:'nohandle',
+          component:NoHandle
+        },{
+          path:'alreadyhandle',
+          name:'alreadyhandle',
+          component:AlreadyHandle
         },{
           path:'returngoods',
           name:'returngoods',
@@ -62,9 +60,9 @@ export default new Router({
           name:'add',
           component:Add
         },{
-          path:'delete',
-          name:'delete',
-          component:Delete
+          path:'lookstock',
+          name:'lookstock',
+          component:LookStock
         }
       ]
     }

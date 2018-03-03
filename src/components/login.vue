@@ -18,7 +18,8 @@
           </el-form-item>
         </el-form>
         <div class="ft">
-          <span @click="goRegister">新用户注册</span><span class="space"></span><span @click="goResetPassword">忘记密码</span>
+          <span @click="goResetPassword">忘记密码</span>
+          <!-- <span @click="goRegister">新用户注册</span> -->
         </div>
       </div>
       <div style="clear:both"></div>
@@ -67,6 +68,7 @@ export default {
         var bodyFormData = new FormData()
           bodyFormData.append('username',this.formdata.account);
           bodyFormData.append('pwd',this.formdata.password);
+          var acc = this.formdata.account
           axios({
             method:"POST",
             url:this.loginUrl,
@@ -74,7 +76,7 @@ export default {
             config: { headers: {'Content-Type': 'application/x-www-form-urlencoded' }}
           })
           .then((res) =>{
-            console.log(res.data)
+            // console.log(res.data)
             if (res.data.status==2) {//密码错误
               this.$notify({
                 message:'密码错误',
@@ -93,12 +95,13 @@ export default {
                 offset:200,
                 onClose:function(){
                  window.location.href="http://localhost:8080/#/index/home"
+                sessionStorage.setItem('username',acc)
                 }
               })
             }
             else{//用户还没注册
               this.$notify({
-                message:'用户还没注册',
+                message:'没有此管理者',
                 type:'error',
                 center:true,
                 duration:1000,

@@ -24,7 +24,7 @@ export default {
 <style lang="scss" scoped>
   #foot{
       position: fixed;
-      bottom:100px;
+      bottom:10px;
       left: 0;
       right: 0;
       border-top:1px solid #c7c7c7;
