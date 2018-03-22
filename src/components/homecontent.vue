@@ -4,22 +4,64 @@
     		<el-row>
     			<el-col class="center fi" :span="12">
     				<div>订单总数</div>
-    				<div><i>666</i>单</div>
+    				<!-- 已处理订单数 -->
+    				<div><i>{{list_number}}</i>单</div>
     			</el-col>
     			<el-col class="center se" :span="12">
     				<div>库存种类</div>
-    				<div><i>88</i>种</div>
-    			</el-col>
+    				<div><i>{{type_number}}</i>种</div>
+    			</el-col> 
     		</el-row>
     	</div>
 	</div>
 </template>
 <script>
+	import axios from 'axios'
 	export default{
 		data(){
 			return{
+				already_handle_order_url:'http://localhost/TabaccoSystem/php/already_handle_order.php',
+        invertory_goods_list_url:'http://localhost/TabaccoSystem/php/invertory_goods_list.php',
+				list_number:'0',
+				type_number:'0'
 
 			}
+		},
+		methods:{
+			// 获取订单数
+			getListNum(){
+				axios({
+	    		method:'GET',
+	    		url:this.already_handle_order_url,
+	    		config: { headers: {'Content-Type': 'application/x-www-form-urlencoded' }}
+	    	})
+	    	.then((res) =>{
+	    		this.list_number = res.data.length
+	        // console.log(res.data.length)
+	    	})
+	    	.catch((error) =>{
+	    		console.log(error)
+	    	})
+			},
+			// 获取库存种类
+			getInvertoryNum(){
+				axios({
+          method:'GET',
+          url:this.invertory_goods_list_url,
+          config: { headers: {'Content-Type': 'application/x-www-form-urlencoded' }}
+        })
+        .then((res) =>{
+        	this.type_number = res.data.length
+          // console.log(res.data.length)
+        })
+        .catch((error) =>{
+	    		console.log(error)
+	    	})
+			}
+		},
+		created(){
+			this.getListNum()
+			this.getInvertoryNum()
 		},
 		components:{
 		}

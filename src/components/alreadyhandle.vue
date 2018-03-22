@@ -105,7 +105,7 @@
 	export default{
 		data(){
 			return{
-				no_handle_order_url:'http://localhost/TabaccoSystem/php/already_handle_order.php',
+				already_handle_order_url:'http://localhost/TabaccoSystem/php/already_handle_order.php',
 				tableData: [],
 				dialogTableVisible: false,
 				gridData:[],
@@ -123,10 +123,11 @@
     created:function(){
     	axios({
     		method:'GET',
-    		url:this.no_handle_order_url,
+    		url:this.already_handle_order_url,
     		config: { headers: {'Content-Type': 'application/x-www-form-urlencoded' }}
     	})
     	.then((res) =>{
+        console.log(res.data.length)
     		if(res.status==200){
     			this.tableData = res.data
     		}
